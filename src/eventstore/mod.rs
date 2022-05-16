@@ -12,7 +12,7 @@ pub use self::orgeventstore::OrgEventStore;
 #[cfg(feature = "eventstore")]
 /// Trait required for event stores. For the moment, event stores are append-only
 pub trait EventStore {
-    fn append(&self, evt: impl Event, stream: &str) -> Result<CloudEvent>;
+    fn append<T>(&self, evt: impl Event, stream: &str) -> Result<T>;
 }
 
 mod inmemory;
