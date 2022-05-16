@@ -39,11 +39,24 @@ impl EventStore for MemoryEventStore {
 
 #[cfg(feature = "eventstore")]
 impl MemoryEventStore {
+    /// Get all events with exact event_type string
     pub fn get_all(&self, event_type: &str) -> Result<Vec<CloudEvent>> {
         let guard = self.evts.lock().unwrap();
         let matches = guard
             .iter()
             .filter(|evt| evt.event_type == event_type)
+            .cloned()
+            .collect();
+
+        Ok(matches)
+    }
+
+    /// Get all events starting with a specific event_type string
+    pub fn get_all_starts_with(&self, event_type: &str) -> Result<Vec<CloudEvent>> {
+        let guard = self.evts.lock().unwrap();
+        let matches = guard
+            .iter()
+            .filter(|evt| evt.event_type.starts_with(event_type))
             .cloned()
             .collect();
 
