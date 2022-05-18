@@ -14,6 +14,20 @@ use uuid::Uuid;
 /// CloudEvent provides a data structure that is JSON-compliant with v1.0 of the CloudEvents
 /// specification. This means that any system with which you want to communicate that is
 /// also CloudEvents-aware can accept the serialized version of this data structure.
+/// ```json
+/// {
+///     "specversion" : "1.0",
+///     "type" : "com.github.pull_request.opened",
+///     "source" : "https://github.com/cloudevents/spec/pull",
+///     "subject" : "123",
+///     "id" : "A234-1234-1234",
+///     "time" : "2018-04-05T17:31:00Z",
+///     "comexampleextension1" : "value",
+///     "comexampleothervalue" : 5,
+///     "datacontenttype" : "text/xml",
+///     "data" : "<much wow=\"xml\"/>"
+/// }
+/// ```
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct CloudEvent {
     #[serde(rename = "specversion")]
@@ -31,6 +45,7 @@ pub struct CloudEvent {
     pub content_type: String,
     pub data: serde_json::Value,
 }
+
 
 impl<E> From<E> for CloudEvent
 where
